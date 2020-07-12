@@ -14,6 +14,7 @@ require('./configs/db.config');
 
 // Routers
 const indexRouter = require('./routes/index.routes');
+const usersRouter = require('./routes/users/signup');
 
 const app = express();
 
@@ -35,6 +36,7 @@ const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.
 
 // Routes middleware
 app.use('/', indexRouter);
+app.use('/signup', usersRouter);
 
 // Catch missing routes and forward to error handler
 app.use((req, res, next) => next(createError(404)));
