@@ -9,12 +9,19 @@ const cookieParser = require('cookie-parser');
 const hbs = require('hbs');
 const mongoose = require('mongoose');
 
+const session = require("./configs/sessions.config")
+
 // Set up the database
 require('./configs/db.config');
+
 
 // Routers
 const indexRouter = require('./routes/index.routes');
 const usersRouter = require('./routes/users/signup');
+const usersRouterLogin = require('./routes/users/login');
+const mainRouter = require('./routes/main');
+const privateRouter = require('./routes/private');
+
 
 const app = express();
 
@@ -37,6 +44,11 @@ const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.
 // Routes middleware
 app.use('/', indexRouter);
 app.use('/signup', usersRouter);
+app.use(session)
+app.use('/login', usersRouterLogin);
+app.use('/main', mainRouter);
+app.use('/private', privateRouter);
+
 
 // Catch missing routes and forward to error handler
 app.use((req, res, next) => next(createError(404)));

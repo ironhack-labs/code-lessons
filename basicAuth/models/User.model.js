@@ -7,12 +7,12 @@ const userSchema = new Schema(
       type: String,
       trim: true,
       required: [true, 'Username is required.'],
-      unique: true
+      unique: [true, 'User name is alredy in use']
     },
     email: {
       type: String,
       required: [true, 'Email is required.'],
-      unique: true,
+      unique: [true, 'This mail is alredy in use'],
       lowercase: true,
       trim: true
     },
@@ -40,6 +40,8 @@ userSchema.pre('save', function(next) {
 
 })
 
-
+userSchema.methods.checkPassword = function(password){
+  return bcrypt.compare(password, this.password)
+}
 
 module.exports = model('User', userSchema);
