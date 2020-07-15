@@ -1,22 +1,36 @@
 <h2>Signup</h2>
-  <form method="POST" action="/signup">
-  <div class="form-group">
-    <label for="email">Email address</label>
-    <input type="email" class="form-control {{#if error.email }}is-invalid{{/if}}" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" value="{{user.email}}" required>
-     {{#if error.email}}
-                                        <div class="invalid-feedback">
-                                        {{error.email.message}}
-                                        </div>
-                                        {{/if}}
-  </div>
+<form method="POST" action="/signup">
+ 
   <div class="form-group">
     <label for="username">User Name</label>
-    <input type="text" class="form-control {{#if err.username}}is-invalid{{/if}}" id="name" name="username" value="{{user.username}}" required>
+    <input type="text" class="form-control {{#if error.username}}is-invalid{{/if}}" id="name" name="username"
+      value="{{error.username}}" required>
+    {{#if error.username}}
+    <div class="invalid-feedback">
+      {{error.username}}
+    </div>
+    {{/if}}
   </div>
    <div class="form-group">
-    <label for="password">Password</label>
-    <input name="password" type="password" class="form-control {{#if err.password}}is-invalid{{/if}}" id="exampleInputPassword1" required>
+    <label for="email">Email address</label>
+    <input type="email" class="form-control {{#if error.email }}is-invalid{{/if}}" id="exampleInputEmail1"
+      aria-describedby="emailHelp" name="email" value="{{user.email}}" required>
+    {{#if error.email}}
+    <div class="invalid-feedback">
+      {{error.email}}
+    </div>
+    {{/if}}
   </div>
- 
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input name="password" type="password" class="form-control {{#if error.password}}is-invalid{{/if}}"
+      id="exampleInputPassword1" required>
+    {{#if error.password}}
+    <div class="invalid-feedback">
+      {{error.password}}
+    </div>
+    {{/if}}
+  </div>
+
+  <button type="submit" class="btn btn-primary">Signup</button>
 </form>

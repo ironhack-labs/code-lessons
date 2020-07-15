@@ -1,53 +1,52 @@
 require('dotenv').config();
+
+
+const bodyParser = require('body-parser')
 const path = require('path');
 const express = require('express');
 const createError = require('http-errors');
-const logger = require('morgan');
+const morgan = require('morgan');
 const favicon = require('serve-favicon');
-
 const cookieParser = require('cookie-parser');
 const hbs = require('hbs');
 const mongoose = require('mongoose');
 
-const session = require("./configs/sessions.config")
+const app = express();
+
+
+
 
 // Set up the database
 require('./configs/db.config');
 
-
-// Routers
-const indexRouter = require('./routes/index.routes');
-const usersRouter = require('./routes/users/signup');
-const usersRouterLogin = require('./routes/users/login');
-const mainRouter = require('./routes/main');
-const privateRouter = require('./routes/private');
+// Set up the sessions
+const session = require("./configs/sessions.config")
 
 
-const app = express();
 
 // Express View engine setup
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+hbs.registerPartials(__dirname + '/views/partials');
 
+
+// Middleware
+app.use(session)
+app.use(bodyParser.json())
+app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
-app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 app.use(cookieParser());
 
 const app_name = require('./package.json').name;
 const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.')[0]}`);
 
-// Routes middleware
-app.use('/', indexRouter);
-app.use('/signup', usersRouter);
-app.use(session)
-app.use('/login', usersRouterLogin);
-app.use('/main', mainRouter);
-app.use('/private', privateRouter);
+// Routers
+const routesConfig = require('./configs/routes.config');
+app.use('/', routesConfig);
 
 
 // Catch missing routes and forward to error handler
@@ -63,5 +62,6 @@ app.use((error, req, res) => {
   res.status(error.status || 500);
   res.render('error');
 });
+
 
 module.exports = app;
