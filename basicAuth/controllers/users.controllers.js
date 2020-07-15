@@ -17,11 +17,11 @@ module.exports.login = (req, res, next ) => {
 }
 // MAIN 
 module.exports.main = (req, res, next ) => {
-  res.render('main');
+  res.render('users/main');
 }
 // PRIVATE 
 module.exports.private = (req, res, next ) => {
-  res.render('users/private', );
+  res.render('users/private' );
 }
 
 // ------ POST ------- //
@@ -42,8 +42,9 @@ module.exports.doLogin =(req, res, next) => {
         user.checkPassword(req.body.password)
         .then(match => {
           if (match) {
+            console.log(user, match)
             req.session.userId = user._id
-            res.redirect('/private')
+            res.redirect('/main')
           } else {
             res.render('users/login', { message: 'Email or password incorrect' })
           }

@@ -5,7 +5,7 @@ const usersController = require('../controllers/users.controllers')
 const { Router } = require('express')
 
 
-router.get('/', usersController.index)
+router.get('/',usersController.index)
 router.get('/signup', usersController.signup)
 router.get('/login', usersController.login)
 router.get('/main', sessionMiddleware.isAuthenticated, usersController.main)
