@@ -18,7 +18,7 @@
           <p><a href="/"> Users - demo </a></p>
         </li>
         <li id="to-right">
-          <a href="/signup">Signup</a> <span> | </span> <a href="/login">Login</a> {{#if currentUser}} {{>menu}} {{/if}}
+          {{#unless currentUser}}<a href="/signup">Signup</a> <span> | </span> <a href="/login">Login</a> {{/unless}}{{#if currentUser}} {{>menu}} {{/if}}
         </li>
       </ul>
     </nav>

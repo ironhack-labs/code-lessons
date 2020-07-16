@@ -24,8 +24,16 @@ module.exports.private = (req, res, next ) => {
   res.render('users/private' );
 }
 
+// LOGOUT
+module.exports.logout = (req, res, next ) => {
+  console.log(req.session)
+ 
+  req.session.destroy();
+  res.redirect('/' );
+}
+
 // ------ POST ------- //
-//SIGNUP
+
 module.exports.doSignup = (req, res, next) => {
   const user = new User (req.body)
   user.save()

@@ -10,6 +10,7 @@ router.get('/signup', usersController.signup)
 router.get('/login', usersController.login)
 router.get('/main', sessionMiddleware.isAuthenticated, usersController.main)
 router.get('/private', sessionMiddleware.isAuthenticated, usersController.private)
+router.get('/logout',usersController.logout)
 
 
 router.post('/signup', usersController.doSignup)
