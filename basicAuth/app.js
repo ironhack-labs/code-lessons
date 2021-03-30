@@ -15,6 +15,9 @@ require('./configs/db.config');
 // Routers
 const indexRouter = require('./routes/index.routes');
 
+// authRouter added
+const authRouter = require('./routes/auth.routes');
+
 const app = express();
 
 // Express View engine setup
@@ -35,6 +38,7 @@ const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.
 
 // Routes middleware
 app.use('/', indexRouter);
+app.use('/', authRouter); //<== add authRouter
 
 // Catch missing routes and forward to error handler
 app.use((req, res, next) => next(createError(404)));

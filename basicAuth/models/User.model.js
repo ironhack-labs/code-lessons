@@ -14,8 +14,12 @@ const userSchema = new Schema(
       unique: true,
       lowercase: true,
       trim: true
-    }
+    },
     // add password property here
+    passwordHash: {
+      type: String,
+      required: [true, 'Password is required.']
+    }
   },
   {
     timestamps: true
