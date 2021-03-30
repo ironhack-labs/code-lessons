@@ -11,6 +11,8 @@ const userSchema = new Schema(
     email: {
       type: String,
       required: [true, 'Email is required.'],
+      // Match will disqualify all emails with empty spaces, missing . before com, and ones with no domain.
+      match: [/^\S+@\S+\.\S+$/, 'Please use a valid email address.'],
       unique: true,
       lowercase: true,
       trim: true
