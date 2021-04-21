@@ -7,6 +7,9 @@ const saltRounds = 10;
 const User = require('../models/User.model');
 const mongoose = require('mongoose');
 
+// ADDED
+const { isLoggedIn } = require('../middleware/auth.middleware');
+
 ////////////////////////////////////////////////////////////////////////
 ///////////////////////////// SIGNUP //////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
@@ -105,14 +108,16 @@ router.post('/login', (req, res, next) => {
 ///////////////////////////// LOGOUT ////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-router.post('/logout', (req, res) => {
-  req.session.destroy();
-  res.redirect('/');
+//                     .: ADDED :.
+router.post('/logout', isLoggedIn, (req, res, next) => {
+  req.session.destroy(err => {
+    if (err) next(err);
+    res.redirect('/');
+  });
 });
-// router.get('/userProfile', (req, res) => res.render('users/user-profile'));
 
-router.get('/userProfile', (req, res) => {
-  // console.log('your sess exp: ', req.session.cookie.expires);
+//                         .: ADDED :.
+router.get('/userProfile', isLoggedIn, (req, res) => {
   res.render('users/user-profile', { userInSession: req.session.currentUser });
 });
 
