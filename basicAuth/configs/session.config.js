@@ -20,8 +20,8 @@ module.exports = (app) => {
     session({
       // in the network tab, we will be able to see the cookie - this secret is getting hashed inside that cookie
       secret: process.env.SESS_SECRET,
-      resave: true,
-      saveUninitialized: false,
+      resave: false, // don't save session if unmodified
+      saveUninitialized: false, // don't create session until something stored
       cookie: {
         sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
         secure: process.env.NODE_ENV === 'production',
