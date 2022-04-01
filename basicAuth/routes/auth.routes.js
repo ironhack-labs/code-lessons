@@ -8,14 +8,15 @@ const User = require('../models/User.model');
 const mongoose = require('mongoose');
 
 // add
-const { isLoggedIn } = require('../configs/route-guard.config');
+const { isLoggedIn, isLoggedOut } = require('../configs/route-guard.config');
 
 ////////////////////////////////////////////////////////////////////////
 ///////////////////////////// SIGNUP //////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
 // .get() route ==> to display the signup form to users
-router.get('/signup', (req, res) => res.render('auth/signup'));
+//                     .: ADDED :.
+router.get('/signup', isLoggedOut, (req, res) => res.render('auth/signup'));
 
 // .post() route ==> to process form data
 router.post('/signup', (req, res, next) => {
@@ -71,7 +72,8 @@ router.post('/signup', (req, res, next) => {
 ////////////////////////////////////////////////////////////////////////
 
 // .get() route ==> to display the login form to users
-router.get('/login', (req, res) => res.render('auth/login'));
+//                    .: ADDED :.
+router.get('/login', isLoggedOut, (req, res) => res.render('auth/login'));
 
 // .post() login route ==> to process form data
 router.post('/login', (req, res, next) => {
